@@ -1,0 +1,27 @@
+{
+  "name": "image-manipulation-detection",
+  "version": "1.0.0",
+  "description": "Full-stack image manipulation detection platform",
+  "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend & npm run dev:backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "cd apps/backend && python app.py",
+    "build": "npm run build --workspace=frontend",
+    "start": "npm start --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend"
+  },
+  "keywords": [
+    "image-manipulation",
+    "detection",
+    "deep-learning",
+    "next.js",
+    "flask"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
