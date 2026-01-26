@@ -24,12 +24,8 @@ CORS(app)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 logger.info(f"Using device: {device}")
 
-# Import segmentation models
-try:
-    import segmentation_models_pytorch as smp
-    logger.info("Segmentation models loaded successfully")
-except ImportError as e:
-    logger.error(f"Error importing segmentation models: {e}")
+# Will import segmentation models lazily
+smp = None
 
 # Global models
 classification_model = None
@@ -38,7 +34,7 @@ CLASS_NAMES = ['Splicing', 'Copy-Move', 'Inpainting', 'Face Manipulation']
 
 def load_models():
     """Load pre-trained models"""
-    global classification_model, segmentation_model
+    global classification_model, segmentation_model, smp
     
     try:
         logger.info("Loading ResNet50 classification model...")
@@ -52,6 +48,10 @@ def load_models():
         logger.info("Classification model loaded")
         
         logger.info("Loading DeepLabV3+ segmentation model...")
+        # Import segmentation models here to avoid import issues
+        import segmentation_models_pytorch as smp_lib
+        smp = smp_lib
+        
         # For segmentation - using DeepLabV3+ with ResNet50 backbone
         segmentation_model = smp.DeepLabV3Plus(
             encoder_name="resnet50",
@@ -66,7 +66,8 @@ def load_models():
         
     except Exception as e:
         logger.error(f"Error loading models: {e}")
-        raise
+        logger.warning("Continuing with partial functionality...")
+        # Don't raise - continue with classification only
 
 def preprocess_image(image, size=256):
     """Preprocess image for model input"""
