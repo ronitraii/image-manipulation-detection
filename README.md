@@ -16,8 +16,9 @@ A full-stack application for detecting image manipulation using deep learning mo
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Python 3.11+
+- **Python 3.11 or 3.12** (NOT 3.13 due to torch compatibility)
 - Git
+- Docker & Docker Compose (optional, recommended for backend)
 
 ### Installation
 
@@ -38,8 +39,13 @@ pip install flask pyngrok torch torchvision segmentation-models-pytorch pillow f
 
 ### Running Both Services
 
+**Option 1: Docker (Recommended)** - No Python version issues
 ```bash
-# From root directory - runs both frontend and backend
+docker-compose up
+```
+
+**Option 2: npm workspaces** - Requires Python 3.11/3.12
+```bash
 npm run dev
 ```
 
