@@ -1,13 +1,29 @@
-node_modules/
-.DS_Store
+# Private Strategy & Interview Prep (Local Only - DO NOT PUSH)
+CV_STRATEGY*.md
+PROJECT3*.md
+COMPLETE_STRATEGY.md
+INTERVIEW_GUIDE.md
+PERSONAL_*.md
+*_PRIVATE.md
+*_LOCAL.md
+MASTER_PLAN.md
+RESEARCH_NOTES.md
+interview_prep/
+strategy/
+
+# Environment & Secrets
+.env
 .env.local
 .env.*.local
-.env
 .env.backend
 .env.frontend
+*.log
+
+# Build artifacts
+node_modules/
+.DS_Store
 dist/
 build/
-*.log
 
 # Python
 __pycache__/
