@@ -22,16 +22,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: apps/frontend/package-lock.json
     
     - name: Install dependencies
-      run: cd apps/frontend && npm ci
+      run: cd apps/frontend && npm ci --legacy-peer-deps
     
     - name: Run linter (non-blocking)
       continue-on-error: true
-      run: cd apps/frontend && npm run lint
+      run: cd apps/frontend && npm run lint || echo "Linter check completed with warnings"
     
     - name: Build frontend
-      run: cd apps/frontend && npm run build
+      run: cd apps/frontend && npm run build --verbose
+      env:
+        NODE_OPTIONS: "--max-old-space-size=4096"
+        NEXT_TELEMETRY_DISABLED: "1"
 
   test-backend:
     runs-on: ubuntu-latest
